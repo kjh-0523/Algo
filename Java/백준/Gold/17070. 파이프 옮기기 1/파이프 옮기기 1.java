@@ -3,10 +3,10 @@ import java.io.InputStreamReader;
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.StringTokenizer;
-
+/*시간 : 760ms 메모리 : 397384kb*/
 public class Main {
-	static int[][] dx = {{0,1,0},{0,1,1},{0,1,1}};
-	static int[][] dy = {{1,1,0},{1,1,0},{0,1,0}};
+	static int[] dx = {0,1,1};
+	static int[] dy = {1,1,0};
 	
 	static int[][] map;
 	static int N;
@@ -31,9 +31,9 @@ public class Main {
 			y = now[1];
 			s = now[2];
 			for (int i = 0; i < 3; i++) {
-				nx = x + dx[s][i];
-				ny = y + dy[s][i];
-				if((nx == x && ny == y)) continue;
+				if(Math.abs(s - i)>=2) continue;
+				nx = x + dx[i];
+				ny = y + dy[i];
 				if(nx > -1 && nx < N && ny > -1 && ny < N && map[nx][ny] != 1) {
 					if(i == 1 && (map[nx-1][ny] == 1 || map[nx][ny-1] == 1)) continue;
 					if(nx == N-1 && ny == N-1) {
