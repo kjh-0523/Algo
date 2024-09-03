@@ -1,8 +1,8 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.HashMap;
 import java.util.StringTokenizer;
-
+import java.util.TreeMap;
+/*시간 : 868ms 메모리 : 313076*/
 public class Main {
 	static int N, d, k,c;
 	static int[] suisi;
@@ -17,19 +17,21 @@ public class Main {
 		for (int i = 0; i < N; i++) {
 			suisi[i] = Integer.parseInt(br.readLine());
 		}
-		HashMap<Integer, Integer> eat = new HashMap<>();
-		eat.put(c, 1);
+		int[] eat = new int[d+1];
+		eat[c]++;
+		int max = 1;
 		for (int i = 0; i < k; i++) {
-			eat.put(suisi[i], eat.getOrDefault(suisi[i], 0)+1);
+			if(eat[suisi[i]] == 0) max += 1;
+			eat[suisi[i]]++;
 		}
-		int max = 0;
+		int ans = 0;
 		for (int i = 0; i < N; i++) {
-			if(eat.get(suisi[i]) == 1) eat.remove(suisi[i]);
-			else eat.put(suisi[i], eat.get(suisi[i])-1);
-			eat.put(suisi[(i+k)%N], eat.getOrDefault(suisi[(i+k)%N], 0)+1);
-			max = Math.max(max, eat.size());
+			eat[suisi[i]]--;
+			if(eat[suisi[i]] == 0) max--;
+			eat[suisi[(i+k)%N]]++;
+			if(eat[suisi[(i+k)%N]] == 1) max++;
+			ans = Math.max(ans, max);
 		}
-		System.out.println(max);
+		System.out.println(ans);
 	}
-
 }
