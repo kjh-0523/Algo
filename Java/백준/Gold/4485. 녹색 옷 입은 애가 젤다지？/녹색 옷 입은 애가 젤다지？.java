@@ -1,9 +1,8 @@
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.PriorityQueue;
 import java.util.StringTokenizer;
-
+/*시간 : 192ms 메모리 : 19176kb*/
 public class Main {
 	static int N, map[][];
 	static int dx[] = { -1, 1, 0, 0 };
@@ -33,7 +32,6 @@ public class Main {
 	static int Dijkstra(int sx, int sy, int ex, int ey) {
 		
 		final int INF = Integer.MAX_VALUE;
-		boolean[][] visited = new boolean[N][N];
 		int[][] minTime = new int[N][N];
 		PriorityQueue<int[]> pQueue = new PriorityQueue<>((o1,o2)->o1[2]-o2[2]); // or Integer.compare(o1[2],o2[2])
 		
@@ -52,15 +50,15 @@ public class Main {
 			int y = stopOver[1];
 			int time = stopOver[2];
 			
-			if(visited[x][y]) continue;
-			visited[x][y] = true;
-			if(x == ex && y == ey) return time;
-			
+			if(x == ex && y == ey) {
+				return time;
+			}
+			if(minTime[x][y] < time) continue;
 			int nx,ny;
 			for (int i = 0; i < 4; i++) {
 				nx = x + dx[i];
 				ny = y + dy[i];
-				if(nx >=0 && nx < N && ny >=0 && ny < N && !visited[nx][ny] && minTime[nx][ny] > time + map[nx][ny]) {
+				if(nx >=0 && nx < N && ny >=0 && ny < N  && minTime[nx][ny] > time + map[nx][ny]) {
 					minTime[nx][ny] = time + map[nx][ny];
 					pQueue.offer(new int[] {nx,ny,minTime[nx][ny]});
 				}
