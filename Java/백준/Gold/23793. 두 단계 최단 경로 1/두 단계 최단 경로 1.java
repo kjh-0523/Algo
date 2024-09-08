@@ -66,7 +66,7 @@ public class Main {
 		while(!q.isEmpty()) {
 			Edge stopOver = q.poll();
 			
-//			if(stopOver.to == end) return;
+			if(stopOver.to == end) return;
 			if(stopOver.weight > distance1[stopOver.to]) continue;
 			for (int i = 0; i < road1[stopOver.to].size(); i++) {
 				if(distance1[road1[stopOver.to].get(i).to] > stopOver.weight + road1[stopOver.to].get(i).weight) {
@@ -81,14 +81,12 @@ public class Main {
 		PriorityQueue<Edge> q = new PriorityQueue<>();
 		Arrays.fill(distance1, Long.MAX_VALUE);
 		distance1[start] = 0;
-//		distance1[Y] = 0;
 		q.offer(new Edge(start,distance1[start]));
 		
 		while(!q.isEmpty()) {
 			Edge stopOver = q.poll();
 			
-//			if(stopOver.to == Y) continue;
-//			if(stopOver.to == end) return;
+			if(stopOver.to == end) return;
 			if(stopOver.weight > distance1[stopOver.to]) continue;
 			for (int i = 0; i < road1[stopOver.to].size(); i++) {
 				if(road1[stopOver.to].get(i).to == Y) continue;
