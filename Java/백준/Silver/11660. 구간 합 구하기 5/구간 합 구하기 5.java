@@ -2,7 +2,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Arrays;
 import java.util.StringTokenizer;
-/*시간 : 88ms 메모리 : 12668kb*/
+/*시간 : 2172ms 메모리 : 141424kb*/
 public class Main {
 
 	public static void main(String[] args) throws Exception {
@@ -11,26 +11,21 @@ public class Main {
 		int N = Integer.parseInt(st.nextToken());
 		int M = Integer.parseInt(st.nextToken());
 		
-		int[] sum = new int[N * N + 1];
-		for (int i = 0; i < N; i++) {
+		int[][] sum = new int[N+1][N+1];
+		for (int i = 1; i < N+1; i++) {
 			st = new StringTokenizer(br.readLine());
 			for (int j = 1; j < N+1; j++) {
-				sum[N*i +j] = Integer.parseInt(st.nextToken()) + sum[N*i+j-1];
+				sum[i][j] = sum[i-1][j] + sum[i][j-1] - sum[i-1][j-1] + Integer.parseInt(st.nextToken());
 			}
 		}
 			
 		for (int i = 0; i < M; i++) {
 			st = new StringTokenizer(br.readLine());
-			int x1 = Integer.parseInt(st.nextToken())-1;
+			int x1 = Integer.parseInt(st.nextToken());
 			int y1 = Integer.parseInt(st.nextToken());
-			int x2 = Integer.parseInt(st.nextToken())-1;
+			int x2 = Integer.parseInt(st.nextToken());
 			int y2 = Integer.parseInt(st.nextToken());
-			int ans = 0;
-			for (int j = x1; j < x2+1; j++) {
-				ans += sum[N*j + y2] - sum[N*j+y1-1];
-			}
-			System.out.println(ans);
+			System.out.println(sum[x2][y2] - sum[x1-1][y2] - sum[x2][y1-1] + sum[x1-1][y1-1]);
 		}
-		
 	}
 }
