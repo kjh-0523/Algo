@@ -14,22 +14,26 @@ public class Main {
 			nums[i] = Integer.parseInt(st.nextToken());
 		}
 		Stack<Integer> stack = new Stack<Integer>();
-		for (int i = 0; i < N; i++) {
-			if(!stack.isEmpty()) {
-				while(!stack.isEmpty() && nums[stack.peek()] < nums[i]) {
-					nums[stack.pop()] = nums[i];
+		int[] ans = new int[N];
+		ans[N-1] = -1;
+		stack.push(nums[N-1]);
+		for (int i = N-2; i > -1; i--) {
+			while(!stack.isEmpty()) {
+				if(stack.peek() > nums[i]) {
+					ans[i] = stack.peek();
+					stack.push(nums[i]);
+					break;
 				}
+				stack.pop();
 			}
-			stack.push(i);
+			if(stack.isEmpty()) {
+				ans[i] = -1;
+				stack.push(nums[i]);
+			}
 		}
-		while(!stack.isEmpty()) {
-			nums[stack.pop()] = -1;
-		}
-		
 		StringBuilder sb = new StringBuilder();
-		
 		for (int i = 0; i < N; i++) {
-			sb.append(nums[i]).append(" ");
+			sb.append(ans[i]).append(" ");
 		}
 		System.out.println(sb.toString());
 	}
