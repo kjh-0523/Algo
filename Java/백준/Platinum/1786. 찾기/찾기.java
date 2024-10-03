@@ -2,17 +2,15 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.*;
 public class Main {
-	
+	static StringBuilder sb;
 	public static void main(String args[]) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		String s = br.readLine();
 		String p = br.readLine();
-		
+		sb = new StringBuilder();
 		List<Integer> ans = kmp(s,p);
 		System.out.println(ans.size());
-		for(int a : ans) {
-			System.out.println(a+1);
-		}
+		System.out.println(sb.toString());
 	}
 	
 	static int[] getPi(String p) {
@@ -43,6 +41,7 @@ public class Main {
 			if(s.charAt(i) == p.charAt(j)) {
 				if(j == pl-1) {
 					ans.add(i-pl+1);
+					sb.append(i-pl+2).append("\n");
 					j = pi[j];
 				}else {
 					j++;
