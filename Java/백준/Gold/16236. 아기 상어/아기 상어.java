@@ -1,3 +1,5 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.*;
 
 public class Main {
@@ -7,14 +9,15 @@ public class Main {
     static int[] dy = {-1, 1, 0, 0};
     static final int INF = Integer.MAX_VALUE;
 
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        N = sc.nextInt();
+    public static void main(String[] args) throws Exception {
+    	BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    	N = Integer.parseInt(br.readLine());
         board = new int[N][N];
-
+        StringTokenizer st = null;
         for (int i = 0; i < N; i++) {
+        	st = new StringTokenizer(br.readLine()," ");
             for (int j = 0; j < N; j++) {
-                board[i][j] = sc.nextInt();
+                board[i][j] = Integer.parseInt(st.nextToken());
                 if (board[i][j] == 9) {
                     sx = i;
                     sy = j;
@@ -41,20 +44,21 @@ public class Main {
                 }
             }
         }
-        sc.close();
     }
 
     static int[][] BFS() {
         Queue<int[]> queue = new LinkedList<>();
         int[][] visit = new int[N][N];
-        for (int[] row : visit) Arrays.fill(row, -1);
+        for (int i = 0; i < N; i++) {
+			Arrays.fill(visit[i], -1);
+		}
 
         queue.add(new int[]{sx, sy});
         visit[sx][sy] = 0;
 
         while (!queue.isEmpty()) {
-            int[] pos = queue.poll();
-            int x = pos[0], y = pos[1];
+            int[] cur = queue.poll();
+            int x = cur[0], y = cur[1];
 
             for (int i = 0; i < 4; i++) {
                 int nx = x + dx[i], ny = y + dy[i];
