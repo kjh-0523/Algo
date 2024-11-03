@@ -25,7 +25,7 @@ public class Main {
 			}
 		}
 		
-		// bfs
+		// dfs
 		int ans = dfs(0,0);
 		
 		System.out.println(ans);
