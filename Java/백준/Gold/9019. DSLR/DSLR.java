@@ -30,42 +30,42 @@ public class Main {
     }
     
     static void bfs() {
-        Queue<Program> q = new LinkedList<>();
-        Set<Integer> visited = new HashSet<>();
-        q.offer(new Program(input, ""));
-        visited.add(input);
+        Deque<Program> deque = new ArrayDeque<>();
+        Map<Integer, String> visited = new HashMap<>();
+        deque.offer(new Program(input, ""));
+        visited.put(input, "");
 
-        while (!q.isEmpty()) {
-            Program cur = q.poll();
+        while (!deque.isEmpty()) {
+            Program cur = deque.poll();
             if (cur.input == ans) {
                 sb.append(cur.commend).append("\n");
                 return;
             }
 
             int temp = (cur.input * 2) % 10000;
-            if (!visited.contains(temp)) {
-                q.offer(new Program(temp, cur.commend + "D"));
-                visited.add(temp);
+            if (!visited.containsKey(temp)) {
+                visited.put(temp, cur.commend + "D");
+                deque.offer(new Program(temp, cur.commend + "D"));
             }
 
-            temp = cur.input - 1;
-            if (temp == -1) temp = 9999;
-            if (!visited.contains(temp)) {
-                q.offer(new Program(temp, cur.commend + "S"));
-                visited.add(temp);
+            temp = cur.input - 1 == -1 ? 9999 : cur.input - 1;
+            if (!visited.containsKey(temp)) {
+                visited.put(temp, cur.commend + "S");
+                deque.offer(new Program(temp, cur.commend + "S"));
             }
 
             temp = (cur.input % 1000) * 10 + (cur.input / 1000);
-            if (!visited.contains(temp)) {
-                q.offer(new Program(temp, cur.commend + "L"));
-                visited.add(temp);
+            if (!visited.containsKey(temp)) {
+                visited.put(temp, cur.commend + "L");
+                deque.offer(new Program(temp, cur.commend + "L"));
             }
 
             temp = (cur.input % 10) * 1000 + (cur.input / 10);
-            if (!visited.contains(temp)) {
-                q.offer(new Program(temp, cur.commend + "R"));
-                visited.add(temp);
+            if (!visited.containsKey(temp)) {
+                visited.put(temp, cur.commend + "R");
+                deque.offer(new Program(temp, cur.commend + "R"));
             }
         }
     }
+
 }
