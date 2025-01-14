@@ -23,7 +23,6 @@ public class Main {
                                  {-1,1,-1,3}};
 
     public static int N, K;
-    public static int ex,ey;
     public static int[][] map;
 
     public static void main(String[] args) throws Exception {
@@ -42,17 +41,26 @@ public class Main {
         }
 
         int ans = bfs();
-//        System.out.println(ex + " " + ey);
-        if(ans == -1 && K == 1){
-            for(int i = 0; i < 6; i++){
-                map[ex][ey] = i;
-                int cnt = bfs();
-                if(cnt > 0){
-                    ans = cnt;
-                    break;
+        if(K == 1){
+            ans = (int)1e7;
+            for(int i = 0; i < N; i++){
+                for(int j = 0; j < N; j++){
+                    int flag = map[i][j];
+                    for(int k = 0; k < 6; k++){
+                        if(flag == k) continue;
+                        map[i][j] = k;
+                        int cnt = bfs();
+//                        System.out.println(cnt);
+                        if(cnt > 0){
+                            ans = Math.min(cnt,ans);
+                        }
+                    }
+                    map[i][j] = flag;
                 }
             }
         }
+
+        ans = ans == (int) 1e7? -1 : ans;
         System.out.println(ans);
 
     }
@@ -64,8 +72,6 @@ public class Main {
         while(!q.isEmpty()){
             int[] cur = q.poll();
             int tile = map[cur[0]][cur[1]];
-            ex = cur[0];
-            ey = cur[1];
 
             int nx = cur[0] + dx[tile][cur[2]];
             int ny = cur[1] + dy[tile][cur[2]];
