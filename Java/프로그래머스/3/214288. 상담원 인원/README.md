@@ -1,6 +1,6 @@
 # [level 3] 상담원 인원 - 214288 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/214288?language=java) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/214288) 
 
 ### 성능 요약
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 02월 04일 21:32:49
+2025년 02월 04일 23:29:33
 
 ### 문제 설명
 
