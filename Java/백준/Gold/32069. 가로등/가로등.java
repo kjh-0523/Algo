@@ -32,17 +32,22 @@ public class Main {
             q.offer(new Node(light, 0));
             visited.add(light);
         }
-        int cnt = 0;
-        while(!q.isEmpty() && cnt++ < K){
+        List<Long> results = new ArrayList<>();
+        while(!q.isEmpty()){
             Node cur = q.poll();
-            sb.append(cur.dis + "\n");
+            results.add(cur.dis);
+            if(results.size() == K) break;
+
             long nx;
             for(int i = 0; i < 2; i++){
                 nx = cur.x + dx[i];
-                if(nx < 0 || nx > L-1 || visited.contains(nx))continue;
+                if(nx < 0 || nx > L || visited.contains(nx))continue;
                 visited.add(nx);
                 q.offer(new Node(nx, cur.dis + 1));
             }
+        }
+        for (long res : results) {
+            sb.append(res).append("\n");
         }
         System.out.println(sb.toString());
     }
