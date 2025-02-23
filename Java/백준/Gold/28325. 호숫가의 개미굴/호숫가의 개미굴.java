@@ -1,35 +1,60 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
 public class Main {
+
     public static int N;
-    public static int[] rooms;
-    public static int[][] dp;
-    public static void main(String[] args) throws Exception {
+    public static int count;
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
-        rooms = new int[N];
-        dp = new int[N][2];
         StringTokenizer st = new StringTokenizer(br.readLine());
+        int[] rooms = new int[N];
+
         for (int i = 0; i < N; i++) {
             rooms[i] = Integer.parseInt(st.nextToken());
         }
-        dp[0][0] = rooms[0];
-        dp[0][1] = 1;
 
-        dp[1][0] = Math.max(dp[0][0], dp[0][1]) + rooms[1];
-        dp[1][1] = dp[0][0] + 1;
+        Set<Integer> idx = new HashSet<>();
+        for (int i = 0; i < N; i++) {
+            if (rooms[i] != 0) {
+                idx.add(i);
+            }
+        }
 
-        for (int i = 2; i < N-1; i++) {
-            dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1]) + rooms[i];
-            dp[i][1] = dp[i - 1][0] + 1;
+        if (idx.isEmpty()) {
+            System.out.println(N / 2);
+        } else {
+            int[] memo = new int[N];
+            count = 0;
+            for (int i = 0; i < N; i++) {
+                if (idx.contains(i)) {
+                    count += rooms[i];
+                    memo[i] = -1;
+                }
+            }
+            if (N == 2) {
+                if (idx.size() == 1) {
+                    count += 1;
+                }
+            } else {
+                int index = 0;
+                for (int i = 0; i < N; i++) {
+                    if (idx.contains(i)) {
+                        index = i;
+                        break;
+                    }
+                }
+                for (int i = index; i < N + index; i++) {
+                    if (memo[i % N] == 0) {
+                        if (memo[(i - 1 + N) % N] != 1 && memo[(i + 1) % N] != 1) {
+                            memo[i % N] = 1;
+                            count += 1;
+                        }
+                    }
+                }
+            }
+            System.out.println(count);
         }
-        if(dp[0][0] >= dp[0][1]) {
-            dp[N-1][0] = Math.max(dp[N - 2][0], dp[N - 2][1]) + rooms[N-1];
-            dp[N-1][1] = dp[N - 2][0] + 1;
-        }else{
-            dp[N-1][0] = Math.max(dp[N - 2][0], dp[N - 2][1]) + rooms[N-1];
-        }
-        System.out.println(Math.max(dp[N - 1][0], dp[N - 1][1]));
     }
 }
