@@ -1,58 +1,53 @@
-import java.util.*;
 import java.io.*;
+import java.util.*;
 
-public class Main{
-	
-	static int N;
-	static PriorityQueue<Node> pq;
-	
-	public static class Node implements Comparable<Node>{
-		int deadLine, weight;
-		
-		public Node(int deadLine, int weight) {
-			this.deadLine = deadLine;
-			this.weight = weight;
-		}
+public class Main {
+    public static int N;
+    public static PriorityQueue<Problem> pq;
 
-		@Override
-		public int compareTo(Node o) {
-			if(o.deadLine == this.deadLine) return o.weight - this.weight;
-			return this.deadLine - o.deadLine;
-		}
+    public static class Problem implements Comparable<Problem>{
+        int no, deadLine, cup;
+        public Problem(int no, int deadLine, int cup){
+            this.no = no;
+            this.deadLine = deadLine;
+            this.cup = cup;
+        }
+        @Override
+        public int compareTo(Problem o) {
+            if(this.deadLine == o.deadLine) return o.cup - this.cup;
+            return deadLine - o.deadLine;
+        }
+    }
 
-
-	}
-	
-    public static void main(String args[]) throws Exception{
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        
         N = Integer.parseInt(br.readLine());
+
         pq = new PriorityQueue<>();
-        
-        StringTokenizer st = null;
-        for(int i = 0; i < N; i++) {
-        	st = new StringTokenizer(br.readLine()," ");
-        	int d = Integer.parseInt(st.nextToken());
-        	int w = Integer.parseInt(st.nextToken());
-        	pq.offer(new Node(d,w));
+        StringTokenizer st;
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+            int d = Integer.parseInt(st.nextToken());
+            int c = Integer.parseInt(st.nextToken());
+            pq.add(new Problem(i, d, c));
         }
-        
+
         PriorityQueue<Integer> problem = new PriorityQueue<>();
-        while(!pq.isEmpty()) {
-        	Node cur = pq.poll();
-        	if(problem.size() < cur.deadLine) {
-        		problem.offer(cur.weight);
-        	}else if(problem.size() >= cur.deadLine) {
-        		if(problem.peek() < cur.weight) {
-        			problem.poll();
-        			problem.add(cur.weight);
-        		}
-        	}
+        while(!pq.isEmpty()){
+            Problem p = pq.poll();
+            if(problem.size() < p.deadLine){
+                problem.offer(p.cup);
+            }else{
+                if(problem.peek() < p.cup){
+                    problem.poll();
+                    problem.offer(p.cup);
+                }
+            }
         }
-        
+
         int ans = 0;
-        for(int p : problem) {
-        	ans += p;
+        for(int p : problem){
+            ans += p;
         }
         System.out.println(ans);
     }
