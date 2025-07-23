@@ -28,9 +28,10 @@ public class Main {
             }
         }
 
+        StringBuilder sb = new StringBuilder();
         for(int i = 1; i < N+1; i++){
-            System.out.print(laser[i] + " ");
+            sb.append(laser[i]).append(" ");
         }
-
+        System.out.println(sb.toString());
     }
 }
